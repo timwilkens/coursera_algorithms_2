@@ -31,3 +31,9 @@ What extra data structures are required for DFS?
 How do you re-create a path from one vertex to another?
 
 In what time does DFS mark all vertices connected to s?
+
+What is the general outline for BFS?
+
+Which of BFS and DFS solves the shortest path problem?
+
+What 'collection' data structures does each algorithm use?

@@ -16,6 +16,13 @@ sub new {
   return bless \%self, $class;
 }
 
+sub clean {
+  my $self = shift;
+
+  $self->{marked} = [];
+  $self->{edge_to} = [];
+}
+
 sub has_path_to { 
   my ($self, $v) = @_;
   return $self->{marked}[$v];
@@ -36,6 +43,29 @@ sub path_to {
 
   push @path, $self->{s};
   return @path;
+}
+
+sub breadth_first {
+  my $self = shift;
+  my $s = $self->{s};
+  my $marked = $self->{marked};
+  my $edge_to = $self->{edge_to};
+  my $graph = $self->{graph};
+  my @queue;
+  
+  push @queue, $s;
+  $marked->[$s] = 1;
+
+  while (@queue) {
+    my $v = shift @queue;
+    for my $w ($graph->adj($v)) {
+      if (!$marked->[$w]) {
+        push @queue, $w;
+        $marked->[$w] = 1;
+        $edge_to->[$w] = $v
+      }
+    }
+  }
 }
 
 sub depth_first {

@@ -1,0 +1,50 @@
+Breadth First Search
+
+  Repeat until queue is empty:
+    remove vertex v from queue
+    add to queue all unmarked vertices adjacent to v and mark them
+
+  Will maintain three additional arrays
+    - marked - seen yet?
+    - edgeTo - parent
+    - distTo - distance from 'root'
+
+  DFS - put unvisited vertices on a stack
+  BFS - put unvisited vertices on a queue
+
+  Shortest path - find path from s to t that uses fewest number of edges
+    BFS (from source vertex to s)
+      Put s onto a FIFO queue, and mark s as visited
+      Repeat until the queue is empty:
+        - remove the least recently added vertex v
+        - add each of v's unvisited neighbors to the queue, and mark them as visited
+
+      Intuition: BSF examines vertices in increasing distance from s
+
+  Proposition: BFS computes shortest paths from s to all other vertices in a graph in time proportional to E + V
+    Proof: queue always consists of zero or more vertices of distance from k to s, followed by zero or more vertices of distance k + 1
+
+  Running time - each vertex connected to s is only visited once
+
+    bfs
+      enqueue(s)
+      marked[s] = true
+      while (!queue.isEmpty)
+        int v = dequeue
+        for (w: G.adj(v))
+          if (!marked[w])
+            enqueue(w)
+            marked(w) = true
+            edgeTo(w) = v
+
+  Application: routing
+    - fewest number of hops in a communication network
+
+  Kevin Bacon numbers.
+
+  The critical data structures used in depth-first search and breadth-first search are _____ and _____.
+
+    1. queue, queue
+    2. queue, stack
+**  3. stack, queue
+    4. stack, stack
