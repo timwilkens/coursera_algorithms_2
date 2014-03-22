@@ -1,0 +1,33 @@
+What is an undirected graph?
+
+Definitions:
+  path
+  cycle
+  connected
+  connected components
+  adjacent
+  degree
+
+What are some common graph processing problems?
+
+What is the API for an undirected graph?
+
+What is the 'easy way' to compute the average degree of an undirected graph?
+
+What are the three representations of undirected graphs?
+
+  Which is used in practice and why?
+
+What is the performance for 'iterate over adj' for the 3 representations?
+
+What is the memory usage for each?
+
+What is the "design pattern" for graph processing algorithms?
+
+What is the general algorithm for DFS?
+
+What extra data structures are required for DFS?
+
+How do you re-create a path from one vertex to another?
+
+In what time does DFS mark all vertices connected to s?

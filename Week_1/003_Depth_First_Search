@@ -1,0 +1,92 @@
+Depth First Search
+
+  Maze exploration
+    - vertex - intersection
+    - edge - passage
+
+  Goal - explore every intersection in the maze
+
+  Classic method - Tremaux maze exploration
+  Algorithm
+    - unroll a ball of string behind you
+    - mark each visited intersection and each visited passage
+    - retrace steps when no unvisited options
+
+    Not so concerned with going the wrong way, but instead concerned with not going somewhere twice
+
+  Goal - systematically search through a graph
+  Idea - mimic maze exploration
+
+  DFS (to visit a vertex v)
+  Mark v as visited
+  Recursively visit all unmarked vertices adjacent to v
+
+  Typical applications
+   - find all vertices connected to a given source verted
+   - find a path between two vertices
+
+  Design pattern for graph processing
+    - decouple graph data type from graph processing
+  
+    - create a graph object
+    - pass the graph to a graph-processing routine
+    - query the graph-processing routine for information
+
+  Paths(Graph G, int s)  - find paths in G from source to s
+
+  hasPathTo(int v)       - is there a path from s to v?
+  pathTo(int v)          - path from s to v; null if no such path
+
+  Paths paths = new Paths(G, s);
+  for (int v = 0; v < G.V(); v++) 
+    if (paths.hasPathTo(v))
+      StdOut.println(v);
+
+To visit a vertex v:
+  - mark vertex v as visited
+  - recursively visit all unmarked vertices adjacent to v
+    - order of recursion here does not matter so much
+
+  - need vertex array of booleans to track marking - initialize to false - marked
+  - need array of ints to track for each vertex, what vertex we came from - edgeTo
+
+  dfs(Graph G, int v)
+    marked[v] = true
+    for (int w: G.adj(v)) {
+      if (!marked[w]) {
+        dfs(G, w);
+        edgeTo[w] = v;
+      }
+    }
+
+  Proposition: DFS marks all vertices connected to s in time proportional to the sum of their degrees
+
+  Proposition: After DFS, can find vertices connected to s in constant time and can find a path to s
+    in time proportional to its length
+
+  hasPathTo(int v) { return marked[v] }
+
+  pathTo(int v) {
+    if (!hasPathTo(v)) return null;
+
+    new stack
+    for (int x = v; x != s; x =edgeto[x])
+      push stack x;
+    push stack s;
+
+    return stack;
+  }
+
+  Photoshop magic wand tool
+    - Vertex - pixel
+    - Edge - between two adjacent similarly colored pixels
+    - Blob - all pixels connected to given pixel
+      - gives you blocks of the same color
+
+  In a graph G represented using the adjacency-lists representation, depth-first search marks
+    all vertices connected to s in time proportional to 
+
+    1. the number of vertices in G
+    2. the number of edges in G
+    3. the number of vertices in the connected component containing s
+**  4. the sum of the degrees of the vertices in the connected component containing s

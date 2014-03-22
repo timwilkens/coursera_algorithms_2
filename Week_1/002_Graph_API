@@ -1,0 +1,91 @@
+Graph API
+
+  Graph representation
+    - graph drawing - provides intution about the structre of the graph
+      - each graph can have many drawn interpretations
+
+  Vertex representation
+    - this lecture - use integers between 0 and V-1
+      - easier array indexing
+    - applications: convert between names and integers with symbol table
+
+    Anomalies can exist - multiple edges between vertices, self-loop
+
+  API
+
+    - create empty Graph
+    - create Graph from input stream
+    - void addEdge(v, w)
+    - adj(v)    - return vertices adjacent to v
+    - int V()   - number of vertices
+    - int E()   - number of edges
+    
+    Simple function to print out all edges (twice) in a graph
+
+    my $graph = Graph->new(input stream);
+
+    for (my $v = 0; v < $graph->v; $v++) {
+      for my $w ($graph->adj($v)) {
+        print "$v - $w\n";
+      }
+    }
+
+  Compute the degree of a vertex v
+
+    my $degree = 0;
+    for ($graph->adj($v) { $degree++; }
+    return $degree
+
+  Checking for self loops just requires checking if (v == w)
+
+  Easy way to compute average degree = 2 * number of edges / number of vertices
+
+  Set-of-edges graph representation
+    - maintain a list of the edges (linked list or array)
+    0 1
+    0 5
+    3 4
+    ...
+
+  Adjacency matrix graph representation
+    - maintain a two-dimensional V-by-V boolean array
+    - for each edge v-w in graph: adj[v][w] = adj[w][v] = true
+      (each entry has two entries)
+    - problem - need N^2 space to represent
+
+  Adjacency-list graph representation (most widely used)
+    - maintain vertex-indexed array of lists
+    - time to iterate, and space to represent are proportional to the number of entries
+
+  Constructor
+    
+    my %self;
+    $self{V} = $v;
+    $self{adj} = [];
+    for (my $i = 0; $i < $v; $i++) {
+      $self{adj}[$i] = [];
+    }
+
+  AddEdge(v, w)
+     push @{$self->{adj}[$v]}, $w;
+     push @{$self->{adj}[$w]}, $v;
+
+  Adjacent(v)
+    return shift->{adj}[v];
+
+  In practice: use adjancecy-list representation
+    - algorithms based on iterating over vertices adjacent to v
+    - real-world graphs tend to be sparse (huge number of vertices, small average vertex degree)
+
+  Iterate over vertices adjacent to v
+    - list of edges - E
+    - adjacency matrix - V
+    - adjacency lists - degree(v)
+
+  What is the order of growth of the memory used to represent a graph with V vertices and E edges
+    using the adjacency-lists representation?
+
+    1. V
+    2. E
+    3. E + V
+    4. V^2

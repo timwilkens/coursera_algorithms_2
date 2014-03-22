@@ -1,0 +1,56 @@
+Introduction to graphs
+
+  Models for processing undirected graphs
+
+  Undirected graphs - set of vertices connected pairwise by edges
+  
+  Why study graph algorithms?
+    - thousands of practical applications
+    - hundreds of graph algorithms known
+    - intersting and broadly useful abstraction
+    - challenging branch of computer science and discrete math
+
+  Ex: protein-protein interaction network
+    - vertices are proteins
+    - edges are interactions
+
+  Ex: internet
+    - vertices are clients/servers
+    - edges are connections
+
+  Ex: - map of science clickstreams
+      - 10 million facebook friends
+      - one week of Enron emails
+      - evolution of FCC lobbying coalitions
+
+  Graph terminology
+    - path - sequence of vertices connected by edges
+    - cycle - path whose first and last vertices are the same
+    
+    Two vertices are connected if there is a path between them
+
+    Connected components are subsets of a graph where every pair of vertices are connected
+
+  Graph-processing problems
+    - is there a path between s and t
+    - is there a shortest path between s and t
+
+    - is there a cycle in the graph
+    - euler tour - is there a cycle that uses each edge exactly once?
+    - hamilton tour - is there a cyce that uses each vertex exactly once?
+
+    - connectivity - is there a way to connect all of the vertices?
+    - mst - what is the best way to connect all of the vertices? (minimum spanning tree)
+    - biconnectivity - is there a vertex whose removal disconnects the graph?
+
+    - planarity - can you draw the graph in the plane with no crossing edges?
+    - graph isomorphism - do adjacency lists represent the same graph?
+
+    Challenge - which of these problems are easy? difficult? intractable?
+
+  A cycle that uses each edge of a graph exactly once is called
+
+    1. a simple cycle
+**  2. an euler tour
+    3. a hamilton tour
+    4. a path
