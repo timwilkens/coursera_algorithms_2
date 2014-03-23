@@ -25,7 +25,6 @@ for (0 .. 12) {
   }
 }
 
-$path->clean;
 $path->breadth_first;
 
 for (0 .. 12) {
@@ -37,7 +36,6 @@ for (0 .. 12) {
   }
 }
 
-$path->clean;
 $path->connected_components;
 
 for (0 .. 12) {

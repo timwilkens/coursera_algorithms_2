@@ -13,6 +13,8 @@ sub new {
   $self{marked} = [];
   $self{edge_to} = [];
   $self{id} = [];
+  $self{group} = [];
+  $self{bi} = undef;
   $self{count} = undef;
 
   return bless \%self, $class;
@@ -24,6 +26,8 @@ sub clean {
   $self->{marked} = [];
   $self->{edge_to} = [];
   $self->{id} = [];
+  $self->{group} = [];
+  $self->{bi} = undef;
   $self->{count} = undef;
 }
 
@@ -51,11 +55,14 @@ sub path_to {
 
 sub breadth_first {
   my $self = shift;
+  $self->clean;  # Auto-clean
+
   my $s = $self->{s};
   my $marked = $self->{marked};
   my $edge_to = $self->{edge_to};
   my $graph = $self->{graph};
   my @queue;
+
   
   push @queue, $s;
   $marked->[$s] = 1;
@@ -74,6 +81,8 @@ sub breadth_first {
 
 sub depth_first {
   my $self = shift;
+  $self->clean;  # Auto-clean
+
   $self->_dfs($self->{s});
 }
 
@@ -82,6 +91,7 @@ sub _dfs {
   my $graph = $self->{graph};
   my $marked = $self->{marked};
   my $edge_to = $self->{edge_to};
+
 
   $marked->[$v] = 1;
 
@@ -95,10 +105,13 @@ sub _dfs {
 
 sub connected_components {
   my $self = shift;
+  $self->clean;  # Auto-clean
+
   my $graph = $self->{graph};
   my $marked = $self->{marked};
   my $num_of_vertices = $graph->{V};
   my $count = 0;
+
 
   for (my $v = 0; $v < $num_of_vertices; $v++) {
     if (!$marked->[$v]) {
@@ -139,6 +152,38 @@ sub in_connected_component {
     return 1;
   } else {
     return 0;
+  }
+}
+
+sub is_bipartite {
+  my $self = shift;
+  $self->clean;  # Auto-clean
+
+  my $s = $self->{s};
+  $self->{bi} = 1; # Initialize to true.
+
+  $self->_bi_dfs($s, 0); # Initial group is 0. 
+
+  return $self->{bi};
+}
+
+sub _bi_dfs {
+  my ($self, $v, $g) = @_;
+  my $graph = $self->{graph};
+  my $marked = $self->{marked};
+  my $edge_to = $self->{edge_to};
+  my $group = $self->{group};
+
+  $marked->[$v] = 1;
+  $group->[$v] = $g;
+
+  for my $w ($graph->adj($v)) {
+    if (!$marked->[$w]) {
+      $self->_bi_dfs($w, (($g + 1) % 2));
+      $edge_to->[$w] = $v;
+    } elsif ($group->[$w] == $g) {
+      $self->{bi} = 0; # Not bipartite.
+    }
   }
 }
 

@@ -37,3 +37,15 @@ What is the general outline for BFS?
 Which of BFS and DFS solves the shortest path problem?
 
 What 'collection' data structures does each algorithm use?
+
+What is the general algorithm for finding connected components?
+  - What is the running time of the pre-calculcation?
+  - What lookup?
+
+What does it mean for a graph to be 'bipartite'?
+
+Which problems are 'do-able'?
+  - Euler circuit
+  - Hamiltonian circuit
+  - Isomorphism
+  - Planar graph
