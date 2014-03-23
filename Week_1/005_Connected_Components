@@ -1,0 +1,56 @@
+Connected Components
+
+  Def: vertices v and w are connected if there is a path between them
+
+  Goal: preprocess graph to answer queries of the form is v connected to w? in constant time
+
+  Class CC - find connected components in G
+  boolean connected (inv, int w)  - are v and w connected
+  int count()  - number of connected components
+  int id(int v) - component identifier
+
+  Implemented using DFS
+
+  The relation "is connected to" is an equivalence relation:
+    - reflexive
+    - symmetric
+    - transitive
+
+  A connected component is a maximal set of connected vertices
+    - when searching, assign to each vertex an id number
+    - this allows lookup to be just if (id[v] == id[w]) (constant time)
+
+  Connected component precalculation can be done in linear time
+
+  Goal: partition vertices into connected components
+
+    Initialize all vertices v as unmarked
+    
+    For each unmarked vertex v, run DFS to identify all vertices discovered as part of the same component
+
+  for (my $v - 0; $v < $self->{v}; $v++) {
+    if (!$marked[$v]) {
+      dfs($graph, $v);
+      $count++;
+    }
+  }
+
+  int count() { return count; }
+  
+  int id(int v) { return id[v]; }
+
+  update dfs:
+    marked[v] = true 
+    id[v] = count
+    for adjacent vertices
+      if not marked
+        dfs
+
+  Application: study spread of STD's
+
+  In undirected graphs, the 'is connected to' relation is _______.
+
+    1. reflexive
+    2. symmetric
+    3. transitive
+    4. all of the above

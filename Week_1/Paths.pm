@@ -12,6 +12,8 @@ sub new {
   $self{s} = $vertex;
   $self{marked} = [];
   $self{edge_to} = [];
+  $self{id} = [];
+  $self{count} = undef;
 
   return bless \%self, $class;
 }
@@ -21,6 +23,8 @@ sub clean {
 
   $self->{marked} = [];
   $self->{edge_to} = [];
+  $self->{id} = [];
+  $self->{count} = undef;
 }
 
 sub has_path_to { 
@@ -86,6 +90,55 @@ sub _dfs {
       $self->_dfs($w);
       $edge_to->[$w] = $v;
     }
+  }
+}
+
+sub connected_components {
+  my $self = shift;
+  my $graph = $self->{graph};
+  my $marked = $self->{marked};
+  my $num_of_vertices = $graph->{V};
+  my $count = 0;
+
+  for (my $v = 0; $v < $num_of_vertices; $v++) {
+    if (!$marked->[$v]) {
+      $self->_cc_dfs($v, $count);
+      $count++;
+    }
+  }
+  
+  $self->{count} = $count;
+}
+
+sub _cc_dfs {
+  my ($self, $v, $count) = @_;
+  my $graph = $self->{graph};
+  my $marked = $self->{marked};
+  my $edge_to = $self->{edge_to};
+  my $id = $self->{id};
+
+  $marked->[$v] = 1;
+  $id->[$v] = $count;
+
+  for my $w ($graph->adj($v)) {
+    if (!$marked->[$w]) {
+      $self->_cc_dfs($w, $count);
+      $edge_to->[$w] = $v;
+    }
+  }
+}
+
+sub count { return shift->{count}; }
+
+sub id { return $_[0]->{id}[$_[1]]; }
+
+sub in_connected_component {
+  my ($self, $v, $w) = @_;
+
+  if ($self->id($v) == $self->id($w)) {
+    return 1;
+  } else {
+    return 0;
   }
 }
 

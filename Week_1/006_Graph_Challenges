@@ -1,0 +1,31 @@
+Graph Challenges
+
+  Problem - Is a graph bipartite?
+    - bipartite - vertices can divided into two subsets such that every edge connects vertices from both sets
+    - We can solve this using a DFS-based solution
+
+  Problem - Find a cycle
+    - solve using a DFS-based solution
+
+  Problem - Euler tour - is there a cycle that uses each edge exactly once?
+    - A connected graph is Eulerian iff all vertices have even degree
+
+  Problem - Hamiltonian tour - find a cycle that visits each vertex exactly once
+    - the travelling salesman problem
+    - intractable - classical NP-complete problem
+      - nobody has an efficient solution to this problem for large graphs
+
+  Problem - are two graphs identical except for vertex names? (isomorphism)
+    - can't brute force - N! ways
+    - graph isomorphism is a longstanding open problem (not even sure to classify it)
+
+  Problem - can a graph be layed in the place without crossing edges?
+    - linear time DFS-based planarity algorithm discovered by Tarjan in 1970s (too complicated for most)
+
+  Which one of the following graph-processing problems is unlikely to have an algorithm whose running time
+    is E + V?
+
+    1. determine whether a graph is bipartite
+    2. determine whether a graph has an Euler cycle
+**  3. determine whether a graph has a Hamilton cycle
+    4. determine whether a graph can be drawn in the plance such that no two edges cross
