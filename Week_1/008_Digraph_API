@@ -1,0 +1,17 @@
+Digraph API
+
+  Use the same design pattern as with undirected graphs
+
+  addEdge method only adds edge in one direction now
+
+  New Method: reverse (digraph where all of the edges are reversed)
+
+  Suppose that a digraph G is represented using the adjacency-list representation. What is the order of growth of the running time
+    to find all vertices that point to a given vertex v?
+
+    1. indegree(v)
+    2. outdegree(v)
+    3. V
+**  4. V + E
+
+    If needing to know indegree for each vertex was important, we could associate another list with each vertex

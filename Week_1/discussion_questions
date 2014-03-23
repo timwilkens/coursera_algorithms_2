@@ -49,3 +49,10 @@ Which problems are 'do-able'?
   - Hamiltonian circuit
   - Isomorphism
   - Planar graph
+
+What are the differences between directed graphs and undirected graphs? How are their APIs different?
+
+What kinds of problems can you represent with digraphs that you can't with undirected graphs?
+  - What about with undirected graphs that you can't with digraphs?
+
+How many possible digraphs are there with V vertices?
