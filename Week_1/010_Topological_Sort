@@ -1,0 +1,40 @@
+Topological Sort
+
+  Goal: given a set of tasks to be completed with precedence constraints,
+    in which order should we schedule the tasks
+
+  Digraph model
+    - vertex = task
+    - edge = precedence constraint
+
+  Topological sort - DAG - directed acyclic graph
+    - redraw DAG so all edges point upwards (topoogical sort)
+
+    Solution: DFS
+
+    Run depth-first search
+     - return vertices in reverse postorder
+     -  when we are done with a vertice we push it on a stack
+
+   Simple adaptation of DFS
+     - after a DFS call returns, push v onto the stack
+     - outer control structure to make sure we iterate over all vertices, even if part of a separte connected component
+
+  Proposition: reverse DFS postorder of a DAG is a topological order
+
+  Proof: 3 cases when entering recursive loop for some vertex v and edge v -> w
+  
+    1. dfs(w) has already been called and returned => w was done before v
+    2. dfs(w) has not been called. dfs(w) will be called directly or indirectly.
+       w will be done before v.
+    3. dfs(w) has already been called, but has not returned.
+       This would imply that the graph has a cycle and is therefore not a DAG
+
+  Proposition: a digraph has a topological order iff no directed cycle
+
+  Proof: If directed cycle, topological order impossible.
+         If no directed cycle, DFS-based algorithm finds a topological order.
+
+  Given a digraph, find a directed graph => use DFS
+
+  Important result: if a digraph has a cycle, creating a topological order is impossible

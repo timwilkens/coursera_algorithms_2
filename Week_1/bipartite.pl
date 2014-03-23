@@ -2,18 +2,18 @@
 
 use strict;
 use warnings;
-use UDGraph;
+use Graph;
 use Paths;
 
 # Bipartite. Simple rectangular graph.
-my $graph = UDGraph->new(6, [[0,1], [0,3], 
-                             [1,2], [2,5],
-                             [5,4], [4,3]]);
+my $graph = Graph->new(6, undef, [[0,1], [0,3], 
+                                  [1,2], [2,5],
+                                  [5,4], [4,3]]);
 
 # Non-Bipartite. Completely connected square.
-my $non_bi_g = UDGraph->new(4, [[0,1], [0,2],
-                                [0,3], [1,2],
-                                [1,3], [2,3]]);
+my $non_bi_g = Graph->new(4, undef, [[0,1], [0,2],
+                                     [0,3], [1,2],
+                                     [1,3], [2,3]]);
 
 for my $g ($graph, $non_bi_g) {
   my $path = Paths->new($g,0);

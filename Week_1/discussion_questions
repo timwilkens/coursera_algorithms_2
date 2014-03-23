@@ -56,3 +56,13 @@ What kinds of problems can you represent with digraphs that you can't with undir
   - What about with undirected graphs that you can't with digraphs?
 
 How many possible digraphs are there with V vertices?
+
+How is DFS on directed graphs used for garbage collection?
+
+Do the DFS and BFS algorithms get changed for digraphs?
+
+What is a DAG?
+
+How is DFS modified to produce a topological sort?
+
+What is relationship between cycles in a graph and a topological ordering?

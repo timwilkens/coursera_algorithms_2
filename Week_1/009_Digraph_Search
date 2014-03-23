@@ -1,0 +1,49 @@
+Digraph Search
+
+  Reachability - find all vertices reachable from s along a directed path
+
+  Same method as for undirected graphs
+    - every undirected graph is a digraph (with edges in both directions)
+    - DFS is a digraph algorithm
+
+    Code is exactly the same as for undirected graphs
+
+  Suppose that during an execution of depth-first search in a digraph G, dfs(v) is called
+    after dfs(w) is called but before dfs(w) returns. Which of the following must be true
+      of graph G?
+
+    1. There exists a directed path from v to w.
+**  2. There exists a directed path from w to v.
+    3. There does not exist a directed path from v to w.
+    4. There exists a directed cycle containing both v and w.
+
+  Reachability application: program control-flow analysis
+    - Every program is a digraph
+    - Vertex - basic block of instructions (straight_line program)
+    - Edge - jump
+
+    Dead-code elimination - find and remove unreachable code
+    Infinite-loop detection - find and remove code that never exits
+
+  Reachability application: mark-sweep garbage collector
+    - vertex - object
+    - edge - reference
+
+    Roots - objects known to be directly accessible by program (e.g. stack)
+    Reachable objects - objects indirectly accessible by program can't be collected
+   
+    Mark-sweep algorithm
+      - mark all reachable objects
+      - sweep - if object is unmarked, it is garbage (so add to free list)
+
+  Breadth first search for digraph is identical to BFS for undirected graphs
+
+  Proposition: BFS computes shortest paths (fewest number of edges) from s to all other vertices in a digraph
+    in time proporitional to E+V
+
+  Can use BFS to also solve 'multiple-source shortest paths' problem
+    - given a set of sources, find the shortest path for each vertex in the graph
+    - just initialize normal BFS by putting the set of source vertices in the queue
+
+  Application: web crawler starting from some root web page (implicit digraph)
+    - BFS helps keep you closer to the origin, while DFS could send you far off

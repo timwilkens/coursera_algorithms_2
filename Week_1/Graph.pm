@@ -1,15 +1,16 @@
-package UDGraph;
+package Graph;
 
 use strict;
 use warnings;
 
 sub new {
-  my ($class, $num_of_vertices, $edges) = @_;
+  my ($class, $num_of_vertices, $bi, $edges) = @_;
 
   my %self;
   $self{V} = $num_of_vertices;
   $self{E} = 0;
   $self{adj} = [];
+  $self{bi} = $bi;
 
   for my $i (0 .. ($num_of_vertices - 1)) {
     $self{adj}[$i] = [];
@@ -30,11 +31,12 @@ sub add_edge {
   my ($self, $v, $w) = @_;
 
   push @{$self->{adj}[$v]}, $w;
-  push @{$self->{adj}[$w]}, $v;
+  if (!$self->{bi}) { # Add other direction if no directed.
+    push @{$self->{adj}[$w]}, $v;
+  }
 
   $self->{E}++;
 }
-
 
 sub adj {
   my ($self, $vertex) = @_;

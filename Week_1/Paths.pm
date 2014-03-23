@@ -2,7 +2,7 @@ package Paths;
 
 use strict;
 use warnings;
-use UDGraph;
+use Graph;
 
 sub new {
   my ($class, $graph, $vertex) = @_;
@@ -16,6 +16,8 @@ sub new {
   $self{group} = [];
   $self{bi} = undef;
   $self{count} = undef;
+  $self{cycle} = undef;
+  $self{onstack} = [];
 
   return bless \%self, $class;
 }
@@ -29,6 +31,8 @@ sub clean {
   $self->{group} = [];
   $self->{bi} = undef;
   $self->{count} = undef;
+  $self->{cycle} = undef;
+  $self->{onstack} = [];
 }
 
 sub has_path_to { 
@@ -185,6 +189,54 @@ sub _bi_dfs {
       $self->{bi} = 0; # Not bipartite.
     }
   }
+}
+
+sub has_cycle {
+  my $self = shift;
+  $self->clean;  # Auto-clean
+
+  my $graph = $self->{graph};
+  my $marked = $self->{marked};
+  my $num_of_vertices = $graph->{V};
+
+
+  for (my $v = 0; $v < $num_of_vertices; $v++) {
+    if (!$marked->[$v]) {
+      $self->_cycle_dfs($v);
+    }
+  }
+
+  return $self->{cycle} ? 1 : 0;
+}
+
+sub _cycle_dfs {
+  my ($self, $v) = @_;
+  my $graph = $self->{graph};
+  my $marked = $self->{marked};
+  my $edge_to = $self->{edge_to};
+  my $on_stack = $self->{onstack};
+
+  $on_stack->[$v] = 1;
+  $marked->[$v] = 1;
+
+  for my $w ($graph->adj($v)) {
+    if ($self->{cycle}) {
+      return;
+    } elsif (!$marked->[$w]) {
+      $edge_to->[$w] = $v;
+      $self->_cycle_dfs($w);
+    } elsif ($on_stack->[$w]) {
+      my @cycle;   
+      for (my $x = $v; $x != $w; $x = $edge_to->[$x]) {
+        push @cycle, $x;
+      }
+      push @cycle, $w;
+      push @cycle, $v;
+      @cycle = reverse(@cycle);
+      $self->{cycle} = \@cycle;
+    }
+  }
+  $on_stack->[$v] = undef;
 }
 
 1;
