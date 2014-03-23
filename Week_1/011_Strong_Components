@@ -1,0 +1,50 @@
+Strong Components
+
+  Strongly-connected components
+    - vertices v and w are strongly connected if there is a directed path from v to w and a directed path from w to v
+
+    Strong connectivity is an equivalence relation
+      - partitions a graph into sections in which all vertices are strongly connected
+
+    Def: a strong component is a maximal subset of strongly-connected vertices
+
+  How many strong components does DAG on V vertices and E edges have?
+    - V - there are no cycles so each vertex is its own strong component
+
+  We can produce the same design pattern for 'strongly connected' as we could for
+    'connected components' in undirected graphs.
+    - we can get constant time lookup
+
+  Application: software module dependency
+    - vertex - software module
+    - edge - from module to dependency
+    strong component - subset of mutually interacting modules
+      - approach - package strong components together
+
+  1972 - linear-time DFS algorithm (Tarjan)
+    - classic algorithm
+    - demonstrated broad applicability and importance of DFS
+
+  1980 - easy two-pass linear-time algorithm (Kosaraju-Sharir)
+    - forgot notes for lecture; developed algorithm in order to teach it
+
+  Kosaraju-Sharir algorithm
+    reverse graph - strong components in G are same as in G sub R
+    Kernel DAG - contract each strong component into a single vertex
+
+    Idea
+      - compute topological order (reverse postorder) in kernel DAG
+      - run DFS, considering vertices in reverse topological order
+
+  Two phases, Two DFS's
+    1. compute reverse postorder in G sub R
+    2. run DFS in G, visiting unmarked vertices in reverse postorder of G sub R (from step 1)
+
+    "Simple (but mysterious) algorithm for computing strong components."
+
+  Proposition: kosaraju-sharir algorithm computes the strong components of a digraph in time proportional to E + V
+    - bottleneck is running DFS twice
+
+  Easy to adapt connected component code.
+    - Get the reverse postorder on the reverse graph and use that as your array to loop
+      over in connected component function

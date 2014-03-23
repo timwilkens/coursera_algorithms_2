@@ -66,3 +66,9 @@ What is a DAG?
 How is DFS modified to produce a topological sort?
 
 What is relationship between cycles in a graph and a topological ordering?
+
+What are "strongly connected components"?
+
+How many strong connected components are there in a DAG of size (E,V)?
+
+What is the Kosaraju-Sharir algorithm for finding strongly connected components?

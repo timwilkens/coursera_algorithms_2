@@ -18,7 +18,7 @@ Topological Sort
 
    Simple adaptation of DFS
      - after a DFS call returns, push v onto the stack
-     - outer control structure to make sure we iterate over all vertices, even if part of a separte connected component
+     - outer control structure to make sure we iterate over all vertices, even if part of a separate connected component
 
   Proposition: reverse DFS postorder of a DAG is a topological order
 

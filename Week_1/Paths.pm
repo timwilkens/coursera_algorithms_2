@@ -18,6 +18,7 @@ sub new {
   $self{count} = undef;
   $self{cycle} = undef;
   $self{onstack} = [];
+  $self{topo} = [];
 
   return bless \%self, $class;
 }
@@ -33,6 +34,7 @@ sub clean {
   $self->{count} = undef;
   $self->{cycle} = undef;
   $self->{onstack} = [];
+  $self->{topo} = [];
 }
 
 sub has_path_to { 
@@ -237,6 +239,42 @@ sub _cycle_dfs {
     }
   }
   $on_stack->[$v] = undef;
+}
+
+sub topological_order {
+  my $self = shift;
+  $self->clean;  # Auto-clean
+
+  my $graph = $self->{graph};
+  my $marked = $self->{marked};
+  my $num_of_vertices = $graph->{V};
+  my $stack = $self->{topo};
+
+  for (my $v = 0; $v < $num_of_vertices; $v++) {
+    if (!$marked->[$v]) {
+      $self->_topo_dfs($v);
+      push @$stack, $v;
+    }
+  }
+  return @$stack;
+}
+
+sub _topo_dfs {
+  my ($self, $v) = @_;
+  my $graph = $self->{graph};
+  my $marked = $self->{marked};
+  my $edge_to = $self->{edge_to};
+  my $stack = $self->{topo};
+
+  $marked->[$v] = 1;
+
+  for my $w ($graph->adj($v)) {
+    if (!$marked->[$w]) {
+      $edge_to->[$w] = $v;
+      $self->_topo_dfs($w);
+      push @$stack, $w;
+    }
+  }
 }
 
 1;
