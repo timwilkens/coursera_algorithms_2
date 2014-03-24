@@ -277,5 +277,46 @@ sub _topo_dfs {
   }
 }
 
+sub kosaraju_sharir {
+  my $self = shift;
+  $self->clean;  # Auto-clean
+
+  my $graph = $self->{graph};
+  my $marked = $self->{marked};
+  my $num_of_vertices = $graph->{V};
+  my $count = 0;
+
+  my $reverse = $graph->reverse;
+  my $path = new('Paths', $reverse, $self->{s});
+  my @post_order = reverse($path->topological_order);
+
+  for my $v (@post_order) {
+    if (!$marked->[$v]) {
+      $self->_kos_dfs($v, $count);
+      $count++;
+    }
+  }
+  
+  $self->{count} = $count;
+}
+
+sub _kos_dfs {
+  my ($self, $v, $count) = @_;
+  my $graph = $self->{graph};
+  my $marked = $self->{marked};
+  my $edge_to = $self->{edge_to};
+  my $id = $self->{id};
+
+  $marked->[$v] = 1;
+  $id->[$v] = $count;
+
+  for my $w ($graph->adj($v)) {
+    if (!$marked->[$w]) {
+      $self->_kos_dfs($w, $count);
+      $edge_to->[$w] = $v;
+    }
+  }
+}
+
 1;
 

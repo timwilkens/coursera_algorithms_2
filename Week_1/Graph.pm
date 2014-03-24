@@ -44,4 +44,19 @@ sub adj {
   return @{$self->{adj}[$vertex]};
 }
 
+sub reverse {
+  my $self = shift;
+
+  return unless $self->{bi};
+
+  my $reverse = new('Graph', $self->{V}, 1);
+
+  for my $v (0 .. scalar(@{$self->{adj}} - 1)) {
+    for my $w (@{$self->{adj}[$v]}) {
+      $reverse->add_edge($w, $v);
+    }
+  }
+  return $reverse;
+}
+
 1;
