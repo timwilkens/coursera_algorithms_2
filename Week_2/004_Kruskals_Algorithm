@@ -1,0 +1,44 @@
+Kruskals Algorithm
+
+  Consider edges in ascending order of weight
+    - add next edge to tree T unless doing so would create a cycle
+
+  Proof - It is a special case of the Greedy MST algorithm
+    - suppose the algo colors the edge e = v-w black
+    - cut = set of vertices connected to v in tree T
+    - no crossing edge is black
+    - no crossing edge has lower weight (we are considering edges in order) 
+
+  Challenge - Would adding edge v-w to tree T create a cycle? If not, add it.
+
+  How difficult?
+   - V - run DFS from v, check if w is reachable
+   - log* V - use the union-find data stucture
+
+  Maintain a set for each connected component in T
+  - if v and w are in same set, then adding v-w would create a cycle
+  - To add v-w to T, merge sets containing v and w
+
+  MST - represented as a queue of edges
+  Use a priority queue to keep track of our edges in min-oriented order
+
+  private Queue<Edge> mst = new Queue<Edge>();
+
+    MinPQ<Edge> pq = new MinPQ<Edge>();
+    for (Edge e : G.edges())
+      pq.insert(e);
+
+    UF uf = new UF(G.V());
+    while (!pq.isEmpty() && mst.size() < G.V()-1) {
+      Edge e = pq.delMin();
+      int v = e.either();
+      int w = e.other(v);
+      if (!uf.connected(v,w) {
+        uf.union(v,w);
+        mst.enqueue(e);
+      }
+    }
+  }
+
+  Proposition: Kruskal's algorithm computes MST in time proportional to E log E (in the worst case)
+

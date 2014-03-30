@@ -1,0 +1,78 @@
+Prims Algorithm
+
+  Start with vertex 0 and greedily grow tree T
+  Add to T the min weight edge with exactly one endpoint in T (i.e. don't create a cycle)
+  Repeat until V - 1 edges
+
+  Proposition: Prim's algorithm computes the MST
+
+  Proof: it is a special case of the greedy MST algorithm
+
+  Challenge - find the min weight edge with exactly one endpoint in T
+
+    - use priority queue! - log E (lazy implementation of Prims's) 
+      - key = edge; priority = weight of edge
+      - delete-min to determine next edge e = v-w to add to T
+      - disregard if both endpoints v and w are in T  (this is the reason for 'lazy' name)
+      - otherwise, let w be the vertex not in T:
+        - add to PQ any edge incident to w
+        - add w to T
+
+  private boolean[]marked
+  private Queue<Edge> mst;
+  private MinPQ<Edge> pq;
+
+    pq = new MinPQ<Edge>();
+    mst = new Queue<Edge>();
+    marked = new boolean[G.V()];
+    visit(G, 0);
+
+    while (!pq.isEmpty()) {
+      Edge e = pq.delMin();
+      int v = e.either;
+      int w = e.other(v);
+      if (marked[v] && marked[w]) continue;
+      mst.enqueue(e);
+      if (!marked[v]) visit(G, v);
+      if (!marked[w]) visit(G, w);
+    }
+
+  visit(graph G, int v) {
+    marked[v] = true;
+    for (Edge e : G.adj(v))
+      if (!marked[e.other(v)]) 
+        pq.insert(e)
+  }
+
+  Proposition: Lazy Prim's algorithm computes the MST in time proportional to E log E and extra space proportional to E
+
+  Eager implementation
+    - Maintain a PQ of vertices(at most one entry per) connected by an edge to T, where priority of 
+      vertex v = weight of shortest edge connecting v to T
+    - Delete min vertex v and add its associated edge e = v-w to T
+    - Update PQ by considering all edges e = v-x incident to v
+      - ignore if x is already in T
+      - add x to PQ if not already on it
+      - decrease priority of x if v-x becomes shortest edge connecting x to T
+
+  Keep two vertex-indexed arrays edgeTo and distTo for priority queue
+
+  PQ implementation must be updated to allow for changing key values that are already in queue
+    - Indexed Priority Queue
+    - insert(int i, Key key) - associate key with index i
+    - decreaseKey(int i, Key key) - decrease the key associated with index i
+    - contains(int i) - is i an index on the priority queue
+
+  Implementation:
+    - start with same code as MinPQ
+    - maintain parallel arrays keys[], pq[], and qp[] so that:
+      - keys[i] is the priority of i
+      - pq[i] is the index of the key in heap position i
+      - qp[i] is the heap position of hte key with index i
+    - use swim(qp[k]) to implement decreaseKey(k, key)
+
+  Bottom line for PQ implementations:
+    - array implementation optimal for dense graphs
+    - binary heap much faster for sparse graphs
+    - 4-way heap worth the trouble in performance-critical situations
+    - Fibonacci heap best in theory, but not worth implementing

@@ -1,0 +1,27 @@
+MST Context
+
+  Unsolved problem in comp sci
+    - Is there a linear-time MST algorithm? (one that only looks at each edge one time) 
+      - although people have prove VERY close to linear so far
+
+  Euclidean MST - Given N points in the plane, find MST connecting them, where the distances between point pairs
+    are there euclidean distances
+    Brute force - compute ~N^2/2 distances and run Prim's algorithm
+    Ingenuity - exploit geometry and do it in ~ cNlogN time
+
+  Scientific application: clustering
+    k-clustering - divide a set of objects into k coherent groups
+    Distance function - numeric value specifying "closeness" of two objects
+
+  Goal: divide into clusters so that objects in different clusters are far apart
+  Applications - routing, document categorization, similarity seraching in medical image databases
+
+  Single-link clustering - distance between two clusters equals the distance between the two closest objects
+
+  "Well-known" algorithm for single-link clustering
+   - Form V clusters of one object each
+   - Find the closest pair of objects such that each object is in a different cluster, and merge the clusters
+   - Repeat until there are exactly k clusters
+  
+   Observation: this is Kruskal's algorithm (stop when k connected components
+     - Alternate solution - run Prim's algorithm and delete k-1 max weight edges

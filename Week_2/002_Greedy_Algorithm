@@ -1,0 +1,50 @@
+Greedy Algorithm
+  General algo design principle
+
+  Simplifying assumptions
+    - edge weights are distinct
+    - graph is connected
+    - consequence - MST exists and is unique (the above assumptions simplify presentation)
+
+  Cut Property
+    - a cut in a graph is a partition of its vertices into two (nonempty) sets
+    - a crossing edge connects a vertex in one set with a vertex in the other
+
+    Cut Property - given any cut, the crossing edge of min weight is in the MST
+
+    Proof: suppose the min-weight crossing edge e is not in the MST
+      - adding e to the MST creates a cycle
+      - some other edge f in cycle must be a crossing edge
+      - removing f and adding e is also a spanning tree
+      - so, MST with e would be better than previous
+
+  Greedy MST algo
+    - start with all edges colored gray
+    - find cut with no black crossing edges; color its min-weight edge black
+    - repeat until V - 1 edges are colored black
+
+  Proposition: the greedy algorithm computes the MST
+
+  Proof: any edge colored black is in the MST (via cut property)
+         - When fewer than V - 1 black edges, always have a cut to make
+
+  Efficient implementations: Choose cut? Find min-weight edge?
+    Ex. 1 - Kruskal's algorithm
+    Ex. 2 - Prim's algorithm
+    Ex. 3 - Boruvka's algorithm
+
+  What if edge weights are not all distinct?
+    - there are multiple MSTs, but greedy algo still works
+ 
+  What if graph is not connected?
+    - compute minimum spanning forest = MST of each component
+
+  Let G be a connected graph with distinct edge weights. Given any cut of G, the crossing edge of
+    _________ is in MST.
+
+**  1. minimum weight
+    2. average
+    3. median weight
+    4. maximum weight
+
+   

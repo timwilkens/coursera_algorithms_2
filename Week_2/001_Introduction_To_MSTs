@@ -1,0 +1,22 @@
+Minimum Spanning Trees
+
+  Given: undirected graph G with positive edge weights (connected)
+  Def: a spanning tree of G is a subgraph T that is both a tree (connected and acyclic)
+    and spanning (includes all of the vertices)
+
+  Goal: find a min weight spanning tree
+
+ Brute force: try all spanning trees - impractical
+
+  MSTs are used to model bike routes, arrangment of nuclei, image dithering, cluster analysis
+
+  Let G be a connected, edge-weighted graph with V vertices and E edges. How many edges are in a 
+    minimum spanning tree of G?
+
+**1. V - 1
+  2. V
+  3. E - 1
+  4. E
+
+  Explanation: If a subgraph had fewer than V - 1 edges, then it cannot be connected; if a subgraph has more than V - 1
+    edges, it must have a cycle.

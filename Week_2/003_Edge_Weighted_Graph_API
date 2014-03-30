@@ -1,0 +1,45 @@
+Edge-Weighted Graph API
+
+  Edge abstraction needed for weighted edges
+    - previously edges were implicit (represented just as connections, properties of vertices)
+
+  Edge(v,w,weight) - create weighted edge v-w
+
+  either() - returns either of the endpoints 
+  other(v) - returns the endpoint that is NOT v
+  compareTo() - compares two edges
+  weight() - return weight
+
+  Idiom - int v = e.either(), w = e.other(v)
+
+  Methods easy to implement
+
+  sub other {
+    my ($self, $vertex) = @_;
+    return $vertex = $self->v ? $self->w : $self->v;
+  }
+
+  EdgeWeightedGraph(int V) - create an empty graph with V vertices
+
+  void addEdge(Edge e) - add weighted edge e to this graph
+  adj(int v) - edges incident to v
+  edges() - all edges in this graph
+
+  Adjacency-lists representation
+    - maintain vertex-indexed array of Edge lists
+    - our verted-indexed array now contains Edge objects, rather than a single integer for a vertex
+
+  addEdge method must add edge to both v and w adjacency list
+
+  MST will usually be constructed from a given EdgeWeightedGraph
+    - constructor will do all the work
+    - client will want edges in the MST back
+      - also may want TOTAL weight of MST
+
+  How many distinct Edge objects are there in the adjacency-lists representation of an edge-weighted graph
+    with V vertices and E edges?
+
+  1. V
+* 2. E   (edges in list are references to a single Edge object (2 per edge))
+  3. V + E
+  4. 2E

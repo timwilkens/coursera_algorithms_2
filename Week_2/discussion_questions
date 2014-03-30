@@ -1,0 +1,31 @@
+What is a spanning tree?
+  - What two conditions must hold?
+
+How many edges are there in a MST for graph G (E,V)?
+
+What is the Greedy Algorithm for computing MSTs?
+  - What is the stop condition?
+
+Can we remove the two 'simplifying assumptions'?
+
+What are 'greedy algorithms'?
+
+How was the API designed to find the endpoints of an edge?
+
+How is the graph representation modified to accomodate weighted edges?
+
+What is Kruskal's algorithm?
+
+What are the two ways to find cycles? Which is preferred?
+
+What data structures are used in Kruskal's algorithm?
+
+What is the running time of Kruskals?
+
+What is the general outline for Prim's algorithm?
+
+What is the lazy implementation of Prim's?
+
+What is the eager implementation?
+
+How does the PQ need to be modified for the eager version?
