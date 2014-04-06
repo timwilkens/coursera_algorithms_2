@@ -1,0 +1,59 @@
+Shortest Path Properties
+
+  Observation: there is a shortest-paths tree
+  Consequence: can represent the SPT with two vertex-indexed arrays
+    distTo[v] is the length of the shortest path from s to v
+    ewdgeTo[v] is the last edge on the shortest path from s to v
+
+  my $path = Stack->new;
+
+  for (my $edge = $edge_to[$v]; $edge; $edge = $edge_to[$edge]) {
+    $path->push($edge);
+  }
+  return $path;
+
+  Edge relaxation
+    Relax edge e = v->w
+
+    distTo[v] is length of shortest known path from s to v
+    distTo[w] is length of shortest known path from s to w
+    edgeTo[w] is last edge on shortest known path from s to w.
+
+    If we find a NEW way to get to a destination vertex that is shorter than the way previously found,
+      we go back and update distTo[destination] and edgeTo[destination] to take the new path
+
+    Essentially we want to be able to update paths as we search, since there are often multiple paths from
+      s to any t, and we may not find the shortest path first
+
+    private voit relax(DirectedEdge e)
+    {
+      int v = e.from(), w = e.to();
+      if (distTo[w] > distTo[v] + e.weight())
+      {
+        distTo[w] = distTo[e] + e.weight();
+        edgeTo[w] = e;
+      }
+    }
+
+  Propositio: Let G be an edge-weighted digraph (Shortest-paths optimality conditions)
+  Then distTo[] are the shortest path distances from s iff:
+    - distTo[s] = 0
+    - For each vertex, distTo[v] is the length of some path from s to v
+    - For each edge e = v->w, distTo[w] <= distTo[v] + e.weight()
+
+  "The best way to understand proofs is to read them slowly, not listen to them quickly."
+
+  Generic algorithm (to compute SPT from s)
+    - intialize distTo[s] = 0 and distTo[v] = infinity for all other vertices
+    Repeat until optimality conditions are satisfied:
+      - relax any edge
+
+  Efficient implementations: How to choose which edge to relax?
+  1. Dijkstra's Algo (nonnegative weights)
+  2. Topological sort algo (no directed cycles)
+  3. Bellman-Ford algo (no negative cycles)
+
+  Let e = v->w be an edge with weight 17.0. Suppose that during the generic shortest paths algorithm, distTo[v] = infinity
+    and distTo[w] = 15.0. What will distTo[w] be after calling relax(e)?
+
+    15.0 (the edge will NOT be relaxed: ! (15 <= infinity + 17)

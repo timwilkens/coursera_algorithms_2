@@ -29,3 +29,11 @@ What is the lazy implementation of Prim's?
 What is the eager implementation?
 
 How does the PQ need to be modified for the eager version?
+
+What are some "versions" of the shortest path problem?
+  What version does the SP API use?
+
+What is "edge relaxation"?
+
+What is the Generic shortest-paths algorithm?
+  - How are the specific algos (dijkstra, topological, bellman-ford) derived from this?

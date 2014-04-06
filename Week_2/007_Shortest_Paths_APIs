@@ -1,0 +1,44 @@
+ Shortest Paths APIs
+
+  Problem: Given an edge-weighted digraph, find the shortest path from s to t
+    - path distance = sum of the weight of the edges
+
+  Most immediate application: any map application that gives us routes
+    - also has lots of applications in other problems that aren't immediately route finding
+
+  Shortest path variants
+    - source-sink: from one vertex to another
+    - single-source: from one vertex to every other (Used in Maps, where source is your current location)
+    - all pairs: between all pairs of vertices  (Pre-compute: only do-able on small graphs)
+
+  Restrictions on edge weights?
+    - nonnegative weights
+    - arbitrary weights
+    - euclidean weights
+
+  Cycles?
+    - no directed cycles
+    - no "negative" cycles
+
+  Simplifying assumption: shortest paths from s to each vertex v exist
+
+  We need an API for processing Edges
+    - create Edge object with Edge.from, Edge.to, and Edge.weight
+
+  EdgeWeightedDigraph
+    EdgeWeightedDigraph(int v) - intialize empty data structure
+    addEdge(DirectedEdge e) - add weighted edge
+    Iterable<DirectedEdge> adj(int v) - edges pointing from v
+    int V() - number of vertices
+
+  Still a vertex-indexed array with each entry a reference to a directed edge
+    - each edge will be in the adjancency-list ONCE (only in the from entry)
+
+  Shortest path API
+    - constructor takes a weighted digraph, and source vertex s
+    distTo(int v) - return length of shortest path from s to t
+    pathTo(int v) - shortest path from s to v
+
+  Which version of the shortest path problem does the SP API represent?
+
+    - single-source: find the shortest path from s to every vertex
