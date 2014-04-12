@@ -1,0 +1,94 @@
+Dijkstra's Algorithm
+
+  Algorithn for finding the shortest path in a digraph with non-negative edges
+
+  Consider the vertices in increasing order of distance from s (non-tree vertex with the lowest distTo[] value)
+    - essentially do breadth-first search, updating as needed when we find a shorter path (more edges but smaller weight)
+  Add vertex to tree and relax all edges pointing from that vertex
+
+  1. Start at the source vertex. Update distTo[] and edgeTo[] for all vertices connected to the source.
+  2. Maintain a min-oriented heap by distance to source of vertices connected to our tree
+  3. Remove the min from the heap and look at that element next
+
+    - At every vertex:
+      - update distTo[] and edgeTo[] if distance is undefined (or infinity) 
+      - update distTo[] if distTo[] current node + weight of edge to next node is smaller than current distTo[] for that node
+        - Intution here is that we have found a more circuitous route that is actually smaller in weight
+
+    The algorithm will generally be used to compute the shortest path to every point, and then can be queried for specific paths.
+
+  Proposition: Dijkstra's algorithm computes a SPT in any edge-weighted digraph with nonnegative weights
+
+  Proof: Each edge e = v->w is relaxed exactly once (when v is relaxed), leaving distTo[w] <= distTo[v] + e.weight()
+      - every vertex is only considered once (will never end up back on the heap)
+    - distTo[w] cannot increase (distTo[] values are monotonous decreasing
+
+  public class DijkstraSP
+  {
+    private DirectedEdge[] edgeTo;
+    private double[] distTo;
+    private IndexMinPQ<Double> pq;
+
+    public DijkstraSP(EdgeWeightedDigraph G, int s)
+    {
+      edgeTo = new DirectedEdge[G.V()];
+      distTo = new double[G.V()];
+      pq = new IndexMinPQ<Double>(G.V());
+
+      for (int v = 0; v < G.V(); v++)
+        distTo[v] = Double.POSITIVE_INFINITY;
+      distTo[s] = 0.0;
+
+      pq.insert(s, 0.0);
+      while(!ps.isEmpty())
+      {
+        int v = pq.delMin();
+        for (DirectedEdge e: G.adj(v))
+          relax(e);
+      }
+    }
+  }
+
+  private void relax(DirectedEdge e)
+  {
+    int v = e.from(), w = e.to();
+    if (distTo[w] > distTo[v] + e.weight())
+    {
+      distTo[w] = distTo[v] + e.weight();
+      edgeTo[w] = e;
+      if (pq.contains(w)) pq.decreaseKey(w, distTo[w]);
+      else                pq.insert     )w, distTo[w]);
+    }
+  }
+
+  * Need priority queue implementation with 'decrease key' method
+
+  Dijkstra's and Prim's algorithms are essentially the same algorithm
+    - both are in a family of algorithms that compute a graph's spanning tree
+
+  Main distinction: rule used to choose next vertex for the tree
+    - Prim's - closest vertex to the tree (via an undirected edge)
+    - Dijkstra's - closest vertex to the source (via a directed path)
+
+  Possible priority queue implementations:
+
+    Computing shortest paths requires V inserts, V delete-mins, and E decrease key
+
+    PQ Implementation    insert      delete-min      decrease-key        total
+    unordered array        1             V                1                V^2
+    binary heap         log V          log V            log V             E log V
+    d-ary heap         d log V        d log V           d log V           E log V
+    fibonacci heap         1           log V              1               E + V log V
+
+  Bottom line:
+    - array implementation optimal for dense graphs
+    - binary heap much faster for sparse graphs
+    - 4-way heap worth the trouble in performance-critical situations
+    - fibonacci heap best in theory, but not worth implementing
+
+  What is the order of growth of the running time of Dijkstra's algorithm using a binary heap? Assume all vertices reachable.
+
+    1. V
+    2. E
+    3. V^2
+**  4. E log V

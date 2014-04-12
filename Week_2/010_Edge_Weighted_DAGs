@@ -1,0 +1,51 @@
+Acyclic edge-weighted digraphs
+
+  - Suppose that an edge-weighted digraph has no directed cycles. Is it easier to find shortest paths than in a general digraph?
+    - Yes!
+
+  Consider vertices in topological order (done with depth first search)
+  Relax all edges pointing from that vertex
+
+    Benefit here is that we don't have to keep a min-oriented heap since we use the topological order to pick next vertex to look at
+
+  Easy to implement
+  
+    for (int v = 0; v < G.V(); v++)
+      distTo[v] = Doubl.POSITIVE_INFINITY;
+    distTo[s] = 0.0;
+
+    Topological topological = new Topological(G);
+    for (int v : topological.order())
+      for (DirectedEdge e : G.adj(v))
+        relax(e);
+    
+  Application: Content-aware resizing
+    - done through something called 'Seam Carving'
+
+    Essentially, find the shortest path from one side to the other in an image and remove those pixels
+      - this can be done repeatedly to give content-aware shrinking of images
+
+  To find vertical seam:
+    Grid DAG: vertex = pixel; edge = from pixel to 3 downward neighbors
+    Weight of pixel = energy function of 8 neighboring pixels
+    Seam = shortest path (sum of vertex weights) from top to bottom
+
+  Also possible to find LONGEST path in edge-weighted DAGs
+
+   - negate all weights
+   - find shortest paths
+   - negate all weights in result
+
+  Application: Parallel job scheduling - Given a set of jobs with durations and precedence constraints, schedule the jobs (by finding
+    a start time for each) so as to achieve the minimum completion time, while respecting the constraints
+
+  Critical Path Method: create edge-weighted DAG
+    - source and sink vertices
+    - two vertices (begin and end) for each job
+    - three edges for each job
+      - begin to end (weighted by duration)
+      - source to begin (0 weight)
+      - end to sink (0 weight)
+    - one edge for ecah precedence constraint (0 weight)
+
+    Use longest path from the source to schedule each job

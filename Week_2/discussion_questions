@@ -37,3 +37,20 @@ What is "edge relaxation"?
 
 What is the Generic shortest-paths algorithm?
   - How are the specific algos (dijkstra, topological, bellman-ford) derived from this?
+
+What is Dijkstra's Algorithm?
+
+Why is Dijkstra's Algorithm correct?
+
+How are Dijkstra's and Prim's algorithm similar?
+  How are they different?
+
+What are the possible implementations of PQ's in Dijkstra's and how do they affect performance?
+  What is best in practice?
+  What about on dense graphs?
+
+What is the algorithm for shortest paths in digraphs with no cycles?
+
+How can we extend this algo to 'seam carving'?
+
+How is the algorithm used for parallel job scheduling?
