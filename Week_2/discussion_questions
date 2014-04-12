@@ -54,3 +54,13 @@ What is the algorithm for shortest paths in digraphs with no cycles?
 How can we extend this algo to 'seam carving'?
 
 How is the algorithm used for parallel job scheduling?
+
+Why are negative weight edges a problem for our previous algorithms?
+  What about negative cycles?
+
+What is the Bellman-Ford algo?
+
+What is a common optimization for B-F?
+  - What is the new running time?
+
+How is B-F applied to arbitrage detection?

@@ -1,0 +1,86 @@
+Negative weights
+
+  Dijkstra's algorithm just doesn't work with negative edges
+    - can't fix by 'normalizing' every weight to be positive
+
+  Topological sort won't work since we might have cycles
+
+  Def: a negative cycle is a directed cycle whose sum of edge weights is negative
+    - this is a problem because we could go around and around in the loop making our path 'shorter' each time
+
+    -  We have a shortest path tree iff we don't have negative cycles
+
+  Bellman-Ford algorithm
+
+    Initialize distTo[s] = 0 and distTo[v] = infinity for all other vertices
+
+    Repeat V times:
+      - Relax each edge
+
+    for (int i = 0; i < G.V(); i++)
+      for (int v = 0; v < G.V(); v++)
+        for (DirectedEdge e : G.adj(v))
+          relax(e);
+   
+    Quadratic! - Repeat V times: relax all E edges
+
+  Practical Improvements:
+
+    If distTo[v] does not change during pass i, no need to relax any edge pointing from v in pass i+1
+   
+      FIFO implementation - maintain queue of vertices whose distTo[] changed
+        - make sure there is only ever one copy of each vertex
+
+    Overall effect: the running time is still proportional to E X V in worst case
+      - but much faster than that in practice
+
+   General remarks
+     - Directed cycles make the problem harder
+     - Negative weights make the problem harder
+     - Negative cycles make the problem intractable 
+
+    Bellman-Ford can be close to E + V running time in the typical case (but could tend towards EV which is quadratic in dense graphs)
+
+
+  Bellman-Ford can be used to find negative cycles
+    - this can be useful to discover that input to something is malformed (or the program has reached a malformed state)
+
+    Observation: If there is a negative cycle, Bellman-Ford will get stuck in loop, updating distTo[] and edgeTo[] entries of vertices in the cycle
+
+    Proposition: If any vertex v is updated in phase V, there exists a negative cycle
+      - we can trace back edgeTo[v] entries to find it 
+      - in practice check for negative cycles frequently
+
+  Application: arbitrage detection (exchange rates)
+    Problem: given table of exchange rates, is there an arbitrage opportunity
+
+    Ex: $1,000 => 741 Euros => 1,012.206 Canadian dollars => $1,007.11497
+
+    Currency exchange graph
+      - vertex = currency
+      - edge = transition, with weight equal to exchange rate
+      - find a directed cycle whose product of edge weights is > 1
+
+    Model as a negative cycle detection problem by taking logs
+      - let weight of edge v->w be -ln (exchange rate from currency v to w)
+      - multiplication turns to addition; > 1 turns to < 0
+      - find a directed cycle whose sum of edge weighs is < 0 (negative cycle)
+
+  Shortest paths summary
+
+  Dijkstra's algorithm
+    - nearly linear-time when weights are nonnegative
+    - generalization encompasses DFS, BFS, and Prim
+
+  Acyclic edge-weighted digraphs
+    - arise in applications
+    - faster than dijkstra's algorithm
+    - negative weights are no problem
+ 
+  Negative weights and negative cycles
+    - arise in application
+    - if no negative cycles, can find shortest paths via Bellman-Ford
+    - if negative cycles, can find one via Bellman-Ford
+
+  Shortest-paths is a broadly useful problem-solving model
+    - lots of problems can be morphed to be shortest-paths problems, which we have efficient solutions to
