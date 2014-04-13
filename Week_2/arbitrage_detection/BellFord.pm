@@ -85,14 +85,14 @@ sub _find_negative_cycle {
   my $graph = $self->{graph};
   my $v = $graph->V;
 
-  my $shortest = DIGraph->new($v);
+  my $spanning_tree = DIGraph->new($v);
   for (my $i = 0; $i < $v; $i++) {
     if ($self->{edge_to}[$i]) {
-       $shortest->add_edge($self->{edge_to}[$i]);
+       $spanning_tree->add_edge($self->{edge_to}[$i]);
     }
   }
 
-  my $cycle_finder = Cycle->new($shortest);
+  my $cycle_finder = Cycle->new($spanning_tree);
   $self->{cycle} = $cycle_finder->find;
 }
 
