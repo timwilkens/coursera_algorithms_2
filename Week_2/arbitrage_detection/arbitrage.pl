@@ -9,6 +9,7 @@ use DIGraph;
 use BellFord;
 
 my $data = get_and_parse_content();
+print "Data collected.\n";
 my %currency_map;
 my @index_map;
 my %rates;
@@ -16,6 +17,7 @@ my $mapper = currency_to_index();
 
 my $graph = make_graph($data);
 
+print "Searching for opportunities.\n";
 find_opportunity($graph);
 
 sub find_opportunity {
@@ -27,7 +29,7 @@ sub find_opportunity {
 
     my @cycle = $searcher->get_cycle;
     my $dollars = 1000;
-    print "Starting with $dollars\n";
+    print "Start with $dollars\n";
     for (my $from = scalar(@cycle) - 2; $from >= 0; $from--) {
       my $to = $from + 1;
       my $rate_key = join('', $cycle[$from],'_',$cycle[$to]);
@@ -37,9 +39,10 @@ sub find_opportunity {
       my $to_name = $index_map[$cycle[$to]];
       my $from_name = $index_map[$cycle[$from]];
   
-      print "$to_name => $from_name : $rate  : $dollars\n";
+      my $string = sprintf("%s => %s : %7.3f  : %7.2f", $to_name, $from_name, $rate, $dollars);
+      print "$string\n";
     }
-    print "End with $dollars\n";
+    printf("End with %.2f\n", $dollars);
 
   } else {
     print "No opportunity available\n";
@@ -49,7 +52,7 @@ sub find_opportunity {
 
 sub make_graph {
   my $data = shift;
-  my $graph = DIGraph->new(16);
+  my $graph = DIGraph->new(20);
 
   while (my ($conversion, $stats) = each %{$data->{results}{rate}}) {
     my $from;
@@ -94,10 +97,11 @@ sub get_and_parse_content {
   my $url = 'http://query.yahooapis.com/v1/public/yql?q=select%20%2a%20from%20yahoo.finance.xchange%20where%20pair%20in%20%28';
   my $end = '%29&env=store://datatables.org/alltableswithkeys';
 
+# Max seems to be around 20 currencies
 #  my @currencies = qw( USD EUR JPY BGN CZK DKK GBP HUF LTL LVL PLN RON SEK CHF NOK HRK RUB TRY AUD BRL CAD CNY HKD IDR ILS INR KRW
 #                       MXN MYR NZD PHP SGD THB ZAR ISK );
 
-  my @currencies = qw( USD EUR JPY BGN CZK DKK GBP HUF LTL LVL PLN RON SEK CHF NOK HRK );
+  my @currencies = qw( USD EUR JPY BGN CZK DKK GBP HUF LTL LVL PLN RON SEK CHF NOK HRK RUB TRY AUD BRL );
 
   for my $from (@currencies) {
     for my $to (@currencies) {
