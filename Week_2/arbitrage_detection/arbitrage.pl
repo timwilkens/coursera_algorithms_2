@@ -8,14 +8,15 @@ use Data::Dumper;
 use DIGraph;
 use BellFord;
 
-my $data = get_and_parse_content();
-print "Data collected.\n";
 my %currency_map;
 my @index_map;
 my %rates;
 my $mapper = currency_to_index();
 
-my $graph = make_graph($data);
+my ($data, $v) = get_and_parse_content();
+print "Data collected.\n";
+
+my $graph = make_graph($data, $v);
 
 print "Searching for opportunities.\n";
 find_opportunity($graph);
@@ -39,7 +40,7 @@ sub find_opportunity {
       my $to_name = $index_map[$cycle[$to]];
       my $from_name = $index_map[$cycle[$from]];
   
-      my $string = sprintf("%s => %s : %7.3f  : %7.2f", $to_name, $from_name, $rate, $dollars);
+      my $string = sprintf("%s => %s : %7.3f  : %7.2f", $from_name, $to_name, $rate, $dollars);
       print "$string\n";
     }
     printf("End with %.2f\n", $dollars);
@@ -51,8 +52,8 @@ sub find_opportunity {
 }
 
 sub make_graph {
-  my $data = shift;
-  my $graph = DIGraph->new(20);
+  my ($data, $v) = @_;
+  my $graph = DIGraph->new($v);
 
   while (my ($conversion, $stats) = each %{$data->{results}{rate}}) {
     my $from;
@@ -101,7 +102,7 @@ sub get_and_parse_content {
 #  my @currencies = qw( USD EUR JPY BGN CZK DKK GBP HUF LTL LVL PLN RON SEK CHF NOK HRK RUB TRY AUD BRL CAD CNY HKD IDR ILS INR KRW
 #                       MXN MYR NZD PHP SGD THB ZAR ISK );
 
-  my @currencies = qw( USD EUR JPY BGN CZK DKK GBP HUF LTL LVL PLN RON SEK CHF NOK HRK RUB TRY AUD BRL );
+  my @currencies = qw( MXN USD EUR JPY );
 
   for my $from (@currencies) {
     for my $to (@currencies) {
@@ -119,5 +120,5 @@ sub get_and_parse_content {
   die "Could not get content at '$url'" if ($res->code != 200);
 
   my $parser = XML::Simple->new;
-  return $parser->XMLin($res->content);
+  return ($parser->XMLin($res->content), scalar(@currencies));
 }

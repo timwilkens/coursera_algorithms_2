@@ -37,7 +37,11 @@ sub bellman_ford {
   $self->{on_queue}[$self->{source}] = 1;
 
   # Change last value to force lower bound on number of edges in cycle.
-  while (@{$self->{queue}} && (!$self->has_cycle || scalar(@{$self->{cycle}}) < 5)) {
+  while (@{$self->{queue}} && (!$self->has_cycle || scalar(@{$self->{cycle}}) < 4)) {
+    if ($self->{cycles} > $graph->V * $graph->E) {
+      $self->{cycle} = undef;
+      return;
+    }
     my $v = shift @{$self->{queue}};
     $self->{on_queue}[$v] = undef;
     $self->_relax($v);
