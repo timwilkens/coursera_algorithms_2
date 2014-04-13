@@ -31,7 +31,7 @@ sub find_opportunity {
     my @cycle = $searcher->get_cycle;
     my $dollars = 1000;
     print "Start with $dollars\n";
-    for (my $from = scalar(@cycle) - 2; $from >= 0; $from--) {
+    for (my $from = 0; $from < scalar(@cycle) - 1; $from++) {
       my $to = $from + 1;
       my $rate_key = join('', $cycle[$from],'_',$cycle[$to]);
       my $rate = $rates{$rate_key};
@@ -46,9 +46,8 @@ sub find_opportunity {
     printf("End with %.2f\n", $dollars);
 
   } else {
-    print "No opportunity available\n";
+    print "No opportunity available.\n";
   }
-
 }
 
 sub make_graph {
@@ -102,7 +101,7 @@ sub get_and_parse_content {
 #  my @currencies = qw( USD EUR JPY BGN CZK DKK GBP HUF LTL LVL PLN RON SEK CHF NOK HRK RUB TRY AUD BRL CAD CNY HKD IDR ILS INR KRW
 #                       MXN MYR NZD PHP SGD THB ZAR ISK );
 
-  my @currencies = qw( MXN USD EUR JPY );
+  my @currencies = qw( MXN USD EUR JPY PHP NZD ISK ZAR HUF DKK );
 
   for my $from (@currencies) {
     for my $to (@currencies) {
