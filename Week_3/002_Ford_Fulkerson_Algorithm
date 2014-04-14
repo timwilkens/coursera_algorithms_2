@@ -1,0 +1,23 @@
+Ford-Fulkerson Algorithm
+
+  Start with 0 flow at every edge
+
+  Augmenting path - Find an undirected path from s to t such that: (treat edges as undirected?)
+    - Can increase flow on forward edges (not full)
+    - Can decrease flow on backward edge (not empty)
+
+  Termination - All paths from s to t are blocked by either a
+    - full forward edge
+    - empty backward edge
+
+  Outline:
+    Start with 0 flow
+    While there exists an augmenting path
+      - find an augmenting path
+      - compute bottleneck capacity
+      - increase flow on that path by bottleneck capacity
+
+  Questions:
+    - How to compute a mincut?
+    - How to find an augmenting path?
+    - Does FF always terminate? If so, after how many augmentations?

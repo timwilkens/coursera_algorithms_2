@@ -1,0 +1,50 @@
+Maxflow and mincut applications
+
+  Like with shortest paths, many unrelated problems can be turned into maxflow/mincut problems
+
+  Data Mining
+  Open-pit mining
+  Bipartite matching
+  Network reliability
+  Baseball elimination
+  Image segmentation
+  Network connectivity
+  Distributed computing
+  Egalitarian stable matching
+  Security of statistical data
+  Multi-camera scene reconstruction
+  Sensor placement for homeland security
+
+Bipartite matching problem
+
+  N students for N jobs
+    - each gets several offers
+   
+  Is there a way to match all students to jobs?
+  - Given a bipartite graph, find a perfect matching.
+    - vertices are divided into two sets, and edges only connect from one set to the other
+
+  Network flow formulation
+    Create s,t, one vertex for each student, and one vertex for each job
+    Add edge from s to each student (capacity 1)
+    Add edge from each job to t
+    Add edge from student to each job offered (infinite capacity)
+
+Baseball Elimination
+
+  Which teams have a chane of finishing the season with the most wins?
+    - Which teams can't possibly win the most games
+    - Sometimes this is easy, but other times it is much more complicated
+    - Answer depends not only on how many games already won and left to play, but on whom they're against
+
+  Intuition - remaining games flow from s to t
+
+    - dummy source vertex
+    - vertex for each pair of teams that still have games to play against each other
+      - edge from s to these vertices is the number of games left to be played
+    - vertex for each team
+      - infinite capacity edge connects games and team
+    
+  Computer scientists still searching for optimal algorithm (linear time)
+
+  Best in practice - push-relable method

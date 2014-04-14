@@ -1,0 +1,28 @@
+Running Time Analysis
+
+  Computing a mincut is easy
+  Find an augmenting path: use BFS
+  If FF terminates, it always computes a maxflow
+  FF DOES always terminate, but the proof is tricky (and requires capacities always be integers)
+
+  Proposition: Number of augmentatations <= value of the maxflow
+  Proof: each augmentation MUST increase the flow by at least 1
+
+  Possible Implementations
+                          # of paths            implementation
+    shortest path         <= 1/2 EV               queue (BFS)
+   
+    fattest path          <= E ln EU              priority queue
+  
+    random path           <= E U                 randomized queue
+
+    DFS path              <= E U                   stack (DFS)
+
+        digraph with V vertices, E edges, and integer capacities (max U)
+
+  If all the edge capacities are integers, the value of the maxflow is ______.
+
+    1. an integer
+    2. a rational number
+    3. a real number
+    4. an imaginary number

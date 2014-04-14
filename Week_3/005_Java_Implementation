@@ -1,0 +1,17 @@
+Java Implementation
+
+  Flow network representation
+ 
+    Associate a flow AND capacity for each edge (essentially a weight and a max weight)
+
+    Need to process edge e = v->w in either direction: include e in both v and w's adjacency lists 
+
+    Residual capacity:
+      Forward edge - capacity - flow
+      Backward edge - flow
+
+    Augment flow
+      - Forward edge - add delta
+      - Backward edge - subtract delta
+
+  Augmenting path in original network is equivalent to directed path in residual network

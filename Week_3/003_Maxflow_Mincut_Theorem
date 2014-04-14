@@ -1,0 +1,36 @@
+Maxflow Mincut Theorem
+
+  Def: the net flow across a cut is the sum of the flows on its edges from A to B minus the sum of the flows on its edges
+    from B to A
+
+  Flow-value lemma: Let f be any flow and let (A,B) be any cut. Then, the net flow across (A,B) equals the value of f
+    - this gives us a link between a cut and flow
+    - Proof by induction on the size of B
+      - start with just t in B, then size of flow is just all paths going into t
+      - swap any from A to B, and local equilibrium ensures the flow remains the same   
+
+  Weak duality between flows and cuts
+  
+    Let f be any flow and let (A,B) be any cut. Then, the value of the flow <= the capacity of the cut
+
+Two theorems to prove
+
+  Augmenting path theorem - a flow f is a maxflow iff no augmenting paths
+  Maxflow-mincut theorem - value of the maxflow = capacity of mincut
+
+  Proof - The following three conditions are equivalent for any flow f:
+    1. There exists a cut whose capacity equals the value of the flow f
+    2. F is a maxflow
+    3. There is no augmenting path with respect to f
+
+  Computing a mincut(A,B) from maxflow f:
+    - Go from source following only not full forward edges and not empty backward edges (gives you the set of vertices in A)
+
+  Given a flow network, let f be any flow and let (A,B) be any cut. Then, the net flow across (A,B) is ____ the value of f.
+
+    1. less than
+    2. greater than
+**  3. equal to
+    4. not related to
+
+    Corollary - outflow from s = inflow to t = value of flow
